@@ -1,0 +1,43 @@
+PRAC-1Configuring ESXI Host
+Installation
+open workstation
+create new vm--> custom--> workstation 16.2--> i will install later--> vmware esxi--> esx7&later-->machine name--> no. of processors-->2 core processors-->2
+4GB-->NAT-->scsi-->IDE-->CREATE NEW VM--> 142-->split-->dctprac.vmdk-->finish-->
+Edit vm setting-->click on prcessor--> select VT-X/EPT
+New CD/DVD(IDE)--> CONNECT POWERGN   USE ISO--> VMWARE-VMVISOR-INSTALLER
+weclcome screen for ESXi installation (click enter)
+licence PRESS [F11] -->ENTER
+us default--> password
+F11--> REBOOT
+NOTE DOWN IP ADD:  static to dynamic [F2]
+pc ip: cmd: ipconfig
+################################
+Prac2 
+configuring Esxi hosts Exmine DCUI SSH MANAGE NETWORK
+FOLLOW PRAC1: 
+Examine the options DCUI:: PRESS F2
+ENTER PASSWORD ENTER 
+sYSTEM CUTOMIZATION SELECT Configure Management Network
+IPV4 Set static IP add  IPV4 CONFIG
+Swfault gateway[192.168.11.2]
+DNS Config enter
+type ip add dns severs Hostname ESXI-30
+press Esc to exit
+Enabling SSH:
+From the Direct Console User Interface press F2 to ACCESS cutomization menu
+Select Troubleshooting Options press Enter
+from the Trouble shooting Menu:
+select services to enable : ENABLE ESxi Shell  Enable SSH 
+Press Enter
+####################################################################
+Prac3: Deploying and configure VM
+Create Vm  Install guest OS Disable Windows Updates Install Vm tools/files
+create VM
+Open Browser and enter the first IP address from the DCUI console & login with the credentials.
+After Login, Click on Create/Register VM-->A wizard opens up, Click Next.
+Give a name to the Virtual Machine & Click Next.
+Select a storage for the VM.Customize the Settings as given below..
+Click Upload and select Ubuntu iso file
+Click Finish...
+The Virtual Machine with UBUNTU Guest Operating system is created. 
+Click to power on it.
