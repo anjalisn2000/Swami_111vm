@@ -1,0 +1,148 @@
+Practical No: 09 Using Templates and Clones
+
+Objective: Deploy a new virtual machine from a template In this lab, you perform the following tasks: and clone a virtual machine
+
+1. Create a Virtual Machine Template 
+2. Create Customization Specifications 
+3. Deploy a Virtual Machine from a Template 
+4. Create a Content Library 
+5. Clone a VM Template to a Template in a Content Library 
+6. Deploy a Virtual Machine from a VM Template in the Content Library
+7. Clone a Powered-On Virtual Machine 
+1: Create a Virtual Machine Template 
+You create a template to securely preserve a virtual machine configuration and easily deploy new virtual machines from the template. 
+1. If vSphere Web Client is not active, open your Internet Explorer Web browser, click vSphere Web Client on the favorites bar, and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. Log in using administrator@vsphere.local as the user name and the standard lab password. 
+4. On the vSphere Web Client Home page, click VMs and Templates. 
+5. In the inventory, expand Datacenter and LabVMs folder.
+6. If the VM1-1 virtual machine is powered on, right-click the virtual machine and select Power > Shut Down Guest OS.
+7. Click Yes to confirm and wait for the virtual machine to power off completely. 
+8. Right-click the VM1-1 virtual machine and select Template > Convert to Template. 
+9. Click Yes to confirm the conversion. 
+10. Right-click the VM1-1 virtual machine template and select Move To. 1
+1. Select VM Folders > Templates folder and click OK. 
+12. Expand the Templates folder, right-click the VM1-1 virtual machine template, and select Rename. 13. Enter VM-Template and click OK.
+
+2: Create Customization Specifications
+1. Go to the vSphere Web Client Home page. 
+2. In the Navigator pane, select Policies and Profiles. 
+3. Under Policies and Profiles, click Customization Specification Manager and click the Create a new specification icon. The New VM Guest Customization Spec wizard appears. 
+4. On the Specify Properties page, verify that Windows is selected from the Target VM Operating System drop-down menu. 
+5. In the Customization Spec Name text box, enter VM-CustomSpec and click Next. 
+6. On the Set Registration Information page, enter VMware Student in the Name text box and enter VMware in the Organization text box. 
+7. Click Next. 
+8. On the Set Computer Name page, click Use the virtual machine name and click Next.
+9. On the Enter Windows License page, leave the product key text box blank, leave other settings at their defaults, and click Next. 
+10. On the Set Administrator Password page, enter the standard lab password and confirm it. 
+11. On the Time Zone page, select the (GMT-08:00) Pacific Time (US & Canada) time zone from the Time Zone drop-down menu and click Next. 
+12. On the Run Once page, click Next. 
+13. On the Configure Network page, verify that Use standard network settings for the guest operating system, including enabling DHCP on all network interfaces is clicked and click Next. 
+14. On the Set Workgroup or Domain page, verify that Workgroup is clicked and that the text box shows WORKGROUP. 
+15. Click Next. 
+16. On the Set Operating System Options page, verify that the Generate New Security ID (SID) check box is selected and click Next. 
+17. On the Ready to complete page, review the information and click Finish. 
+18. In the Customization Specification Manager pane, verify that VM-CustomSpec is listed.
+
+3: Deploy a Virtual Machine from a Template 
+Using templates, you rapidly deploy and provision new virtual machines and easily customize the guest operating systems. 
+1. On the vSphere Web Client Home page, click VMs and Templates and expand the view of the inventory. 
+2. In the left pane, expand the data center and folders until all the virtual machines are visible. 
+3. Right-click VM-Template and select New VM from this Template. The Deploy From Template wizard starts. 
+4. On the Select a name and folder page, enter VM1-2. 
+5. In the Select a location for the virtual machine pane, expand the inventory tree, select the LabVMs folder, and click Next. 
+6. On the Select a compute resource page, expand the Lab Servers folder and select sa-esxi01.vclass.local. The Compatibility pane displays the Compatibility checks succeeded message. 
+7. Click Next.
+8. On the Select storage page, select Shared-iSCSI-Datastore from the list. The Compatibility pane displays the Compatibility checks succeeded message. 
+9. Click Next. 
+10. On the Select clone options page, select the Customize the operating system and the Power on virtual machine after creation check boxes and click Next. 
+11. On the Customize guest OS page, select VM-CustomSpec and click Next. 
+12. On the Ready to complete page, review the information and click Finish. 
+13. Repeat steps 3 through 12 to create another virtual machine on your second host named sa-esxi-02.vclass.local and name it VM2-2.
+14. In the Recent Tasks pane, monitor the progress of the two template deployment tasks and wait for their completion. 
+15. Open a console for each of the newly created virtual machines. 
+a. In the left pane of vSphere Web Client, right-click the virtual machine and select Open Console. When the virtual machine console opens, you might see the Windows setup process continuing. It automatically reboots a few times to complete the process. 
+b. Log in as admin with the standard lab password.
+c. When the Set Network Location window opens, click Work network
+d.Click Close
+e.Verify that VMware Tools is installed by navigating to the Windows system tray at the lower-right corner to show hidden icons, and double-click the VMware Tools icon.
+f.Ensure that VMware Tools for Windows is running.
+g. Close the virtual machine console. 
+16. In vSphere Web Client, select each virtual machines individually in the Navigator pane, and click the Refresh icon in order for the Summary tab data to be updated.
+
+4: Create a Content Library
+1. Navigate to the vSphere Web Client Home page. 
+2. In the Navigator pane, click Content Libraries. 
+3. In the center pane, click the Create a new content library icon under the Objects tab. 
+4. On the Name and location page, enter VM_Library in the Name text box and click Next
+5. In the Configure content library page, select Local content library, select the Publish externally check box, and click Next. 
+6. In the Add storage page, select Select a datastore and select Shared-iSCSI-Datastore and click Next. 
+7. On the Ready to complete page, review the information and click Finish. 
+8. Wait for this task to finish before you go to the next task.
+
+5: Clone a VM Template to a Template in a Content Library 
+You clone virtual machines or VM templates from the vCenter Server inventory to templates in the content library and use them later to provision virtual machines on a cluster or a host. You can also clone a virtual machine or VM template to update an existing template in the library. 
+1. Navigate to the vSphere Web Client Home page, and click VMs and Templates. 
+2. Expand the view of the data center and all folders. 
+3. Right-click VM-Template and select Clone to Library.
+ 4. For Clone as, verify that New template is selected. 
+5. Under the Filter tab, click VM_Library. 
+6. In the template name text box, enter VM-TemplateLib. 
+7. Click OK and wait for the task to finish before you go to the next task. 
+This process takes about five minutes.
+6: Deploy a Virtual Machine from a VM Template in the Content Library 
+You use a VM template from a content library to deploy a virtual machine to a host or a cluster in your vSphere inventory. You can also apply a customization specification to the virtual machine. 
+1. Navigate to the vSphere Web Client Home page and click Content Libraries. 
+2. In the navigator pane, select VM_Library. 
+3. Click the Templates tab. 
+4. Right-click VM-TemplateLib and select New VM from This Template. 
+5. On the Select name and location page, enter VM-FromLib in the Name text box. 
+6. Ensure that the Browse tab is clicked and expand the view of Datacenter. 
+7. Select the LabVMs folder. 
+8. Select the Customize VM Options - Customize the operation system check box and click Next
+9. On the Customize guest OS page, select VM-CustomSpec and click Next. 
+10. On the Select a resource page, expand the Lab Servers folder, select sa-esxi-02.vclass.local host, and click Next. 
+11. On the Review details page, verify the template details and click Next. 
+12. On the Select storage page, select Thin Provision from the Select virtual disk format dropdown menu. 
+13. Under Datastores tab in the Filter tab, ensure that Local02-2 is clicked.
+14. Click Next. 
+15. On the Select networks page, ensure that Production appears in the Destination Network field and click Next. 
+16. On the Ready to complete page, review the information and click Finish. 
+17. In the Recent Tasks pane, monitor the progress of the template deployment task and wait for completion. This task takes about five minutes. 
+18. In vSphere Web Client, click the Home icon and select VMs and Templates. 19. In the left pane, right-click VM-FromLib and select Power > Power On.
+20. Open a console for the VM-FromLib virtual machine
+a. In the left pane of vSphere Web Client, right-click the VM-FromLib virtual machine and select Open Console. When the virtual machine console opens, you might see the Windows setup process continuing. It automatically reboots a few times to complete the process.
+ b. Log in as admin with the standard lab password. 
+c. When the Set Network Location window opens, click Work network. 
+d. Click Close. 
+e. Verify that VMware Tools is installed by navigating to the Windows system tray at the lower-right corner to show hidden icons and double-click the VMware Tools icon. 
+f. Verify that VMware Tools for Windows is running.
+21. Close the virtual machine console. 
+22. Navigate to the vSphere Web Client Home page. 
+23. Click Content Libraries. 
+24. Right-click the VM_Library content library in the Navigator pane and select Delete.
+25. In the Delete library confirmation dialog box, click Yes.
+7: Clone a Powered-On Virtual Machine
+1. On the vSphere Web Client Home page, click VMs and Templates. 
+2. In the inventory, expand the Datacenter and LabVMs folders. 
+3. If the VM2-1 virtual machine is not powered on, right-click the virtual machine and select Power > Power on. 
+4. Right-click the VM2-1 virtual machine and select Clone > Clone to Virtual Machine. The Clone Existing Virtual Machine wizard starts. 
+5. On the Select a name and folder page, enter Hot-Clone in the Enter a name for the virtual machine text box.
+ 6. For the Select a location for the virtual machine setting, expand Datacenter and select LabVMs. 
+7. Click Next.
+8. On the Select a compute resource page, select Datacenter > Lab Servers > sa-esxi02.vclass.local and click Next. 
+9. On the Select storage page, select Shared-iSCSI-Datastore and click Next. 
+10. On the Select clone options page, select the Customize the operating system and the Power on virtual machine after creation check boxes. 
+11. Click Next. 
+12. On the Customize guest OS page, select VM-CustomSpec and click Next. 
+13. On the Ready to complete page, review the information and click Finish. 
+14. Monitor the progress of the task in the Recent Tasks pane.
+15. Open a console for the Hot-Clone virtual machine.
+a. In the left pane of vSphere Web Client, right-click the Hot-Clone virtual machine and select Open Console. When the virtual machine console opens, you might see the Windows setup process continuing. It automatically reboots a few times to complete the process. 	
+b. Log in as admin with the standard lab password. 
+c. Wait until the VM desktop and the Set Network Location page appear. d. When the Set Network Location window opens, click Work network. 
+e. Click Close.
+f. Verify that VMware Tools is installed by navigating to the Windows system tray at the lower-right corner to show hidden icons and double-click the VMware Tools icon. 
+g. Verify that VMware Tools for Windows is running.
+16. Close the virtual machine console. 
+17. Leave vSphere Web Client open for the next lab
