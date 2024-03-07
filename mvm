@@ -1,0 +1,72 @@
+Practical No: 10 Modifying Virtual Machines
+
+1: Increase the Size of a VMDK File 
+1. If vSphere Web Client is not active, open your Internet Explorer Web browser, click vSphere Web Client on the favorite bar, and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. Log in using administrator@vsphere.local as the user name and standard lab password. 
+4. On the vSphere Web Client Home page, click VMs and Templates. 
+5. In the left pane, expand the datacenter and folders. 
+6. Right-click your Hot-Clone virtual machine in the inventory and select Edit Settings.
+7. On the Virtual Hardware tab, record the size (GB) of Hard Disk 1._____
+8. In the Hard disk 1 text box, increase the disk size by 2 GB and click OK. 
+9. Right-click the Hot-Clone virtual machine and select Open Console.
+10. If the Security Warning appears, click Continue to this website (not recommended). 
+11. If necessary, enter the standard lab password. 
+12. Configure the Hot-Clone virtual machine’s guest operating system to detect and extend the increased disk space
+a. Click Start. 
+b. Right-click on the Computer icon and choose Manage. 
+c. In the left pane, select Disk Management. 
+d. Right-click Disk Management and select Rescan Disks
+e. In the lower-right pane, verify that the 2 GB unallocated disk space is discovered.
+f. Right-click the C: drive and select Extend Volume. The Extend Volume wizard starts.
+g. Click Next. h. On the Select Disks page, verify that Disk 0 is selected in the Selected pane and click Next
+i. On the Completing the Extend Volume Wizard page, review the information and click Finish.
+13. In the Disk Management window, verify that the local C: drive (Disk 0) is extended. 
+14. Record the value for the total size of the C: drive. _ 
+15. Compare the value with that you recorded in step 7. 
+16. Close the Computer Management window. 
+17. Close the virtual machine console.
+
+2: Adjust Memory Allocation on a Virtual Machine
+You add, change, or configure virtual machine memory resources or options to enhance virtual machine performance. 
+1. In the inventory, right-click the Hot-Clone virtual machine and select Power > Shut Down Guest OS. NOTE If your Shut Down Guest OS option is dimmed, refresh the vSphere Web Client screen and try again. 
+2. Click Yes to confirm the shutdown. 
+3. After the Hot-Clone virtual machine is shut down, right-click it and select Edit Settings. 
+4. On the Virtual Hardware tab, enter 2048 in the Memory text box and verify that MB is selected from the drop-down menu. 
+5. Click OK. 
+6. Click the virtual machine’s Summary tab and expand the view of the VM Hardware pane to verify that the memory has been increased
+3: Rename a Virtual Machine in the vCenter Server Inventory
+You rename an existing virtual machine in the vCenter Server Appliance inventory. 
+1. Right-click the Hot-Clone virtual machine in the inventory and select Rename. 
+2. In the Enter the new name text box, enter VM2-3. 
+3. Click OK. 
+4. Select VM2-3 virtual machine from the inventory and click the Datastores tab.
+5. Right-click Shared-iSCSI-Datastore and select Browse Files
+4: Add and Remove a Raw LUN on a Virtual Machine
+1. In the vSphere Web Client Navigator pane, click the VMs and Templates icon. 
+2. Right-click the VM2-3 virtual machine and select Edit Settings. 
+3. On the Virtual Hardware tab, select RDM Disk from the New device drop-down menu and click Add. 
+4. In the Select Target LUN dialog box, select 1 and click OK. 
+5. Click the arrow next to New Hard disk to expand the view.
+ 6. In the Location drop-down menu, verify that Store with the virtual machine is selected. 
+7. From the Compatibility Mode drop-down menu, select Virtual and click OK
+8. Verify that the guest operating system can see the new disk
+a. In the left pane, right-click the VM2-3 virtual machine and select Power > Power On.
+ b. Right-click the VM2-3 virtual machine and select Open console 
+c. If the Security Warning appears, click Continue to this website (not recommended). 
+d. Log in as admin with the standard lab password. 
+e. Click Start. 
+f. Right-click the Computer icon and choose Manage. 
+g. In the left pane, select Disk Management. 
+h. When the Initialize Disk wizard starts, click Cancel. 
+i. Verify that Disk 1 is listed.
+j. Close the Computer Management window
+9. Close the virtual machine console. 
+10. Remove the RDM hard disk from the VM2-3 virtual machine.
+a. Right-click the VM2-3 virtual machine and select Power > Shut Down Guest OS
+b. Click Yes to confirm the shutdown and wait for the virtual machine to power off. 
+c. Right-click the VM2-3 virtual machine and click Edit Settings
+d. Under the Virtual Hardware tab, point to Hard disk 2. 
+e. Click the x icon that appears at the right side of the row for Hard disk 2.
+f.Select the Delete files from datastore check box and click OK.
+11. Leave vSphere Web Client open for the next lab
