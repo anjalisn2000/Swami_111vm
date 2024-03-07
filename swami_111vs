@@ -1,0 +1,469 @@
+VMWARE HOL 101[https://discovery.vmware.com/?menu=overview]
+https://discovery.vmware.com/?menu=overview [Anju@1361]
+https://console.cloud.vmware.com/csp/gateway/portal/#/consumer/services/organization
+
+prac4 Working with vCenter Serve
+ 
+Deploy a VMware vCenter® Server Appliance™ on a your first ESXi host:
+1. On your student desktop, navigate to the Class Materials and Licenses folder and double-click to open it.
+ 2. Double-click the Class Files subfolder. 
+3. Double-click the VMware-VCSA-all-6.5.0.iso file. 
+4. Double-click the vcsa-ui-installer folder. 
+5. Double-click the win32 folder.
+ 6. Locate and double-click the installer.exe application.
+ 7. On the vCenter Server Appliance 6.5 Installer page, click Install
+8. On the Install-Stage 1: Deploy appliance page, select the I accept the terms of the license agreement check box and click Next.
+9. On the Select deployment type page, ensure that vCenter Server with an Embedded Platform Services Controller is selected and click Next. 
+10. On the Appliance deployment target page, enter your first ESXi host name sa-esxi01.vclass.local in the ESXi host or vCenter Server name text box. 
+11. In the HTTPS port text box, enter 443. 
+12. In the User name text box, enter root.
+ 13. In the Password text box, enter the standard lab password and click Next.
+ 14. On the Certificate Warning page, click Yes. 
+15. On the Set up appliance VM page, enter 172.20.10.194 in the VM name text box.
+ 16. Enter the standard lab password in the Root password and Confirm root password text boxes and click Next.
+ 17. On the Select deployment size page, accept the default Tiny and click Next.
+ 18. On the Select datastore page, select Local01-2 as the deployment datastore. 
+19. Select the Enable Thin Disk Mode check box and click Next
+ 20. On the Configure network settings page, select VM Network from the Network drop-down menu.
+ 21. From the IP version drop-down menu, select IPv4. 
+22. From the IP assignment drop-down menu, select static. 
+23. In the System name text box, enter 172.20.10.194.
+ 24. In the IP address text box, enter 172.20.10.194. 
+25. In the Subnet mask or prefix length text box, enter 255.255.255.0. 
+26. In the Default gateway text box, enter 172.20.10.10. 
+27. In the DNS servers text box, enter 172.20.10.10 and click Next. 
+28. Click Finish.
+
+Task 2: Access and Configure vCenter Server Appliance
+ You license both vCenter Server and ESXi hosts, edit the SSO configuration, create a data center object, and add your ESXi hosts to the inventory. 
+1. In your Internet Explorer Web browser, click vSphere Web Client on the favorite bar and select vSphere Web Client - sa-vcsa-01.vclass.local.
+ 2. When the Website Security page opens, click Continue to this website (not recommended).
+ 3. Log in to vCenter Server using administrator@vsphere.local as the user name and the standard lab password.
+ 4. In vSphere Web Client, click the Home icon and select Administration.
+5. In the Navigator pane, select Licenses.
+ 6. In the Content pane, click the Licenses tab.
+ 7. Click the Create New Licenses icon (the green plus sign). 
+8. On the Enter license keys page, in the License keys text box, enter the vCenter Server and vSphere Enterprise Plus license keys (on separate lines) provided by your instructor. 
+9. Verify that both licenses are listed correctly in the text box and click Next. 
+10. On the Edit license names page, enter VMware vCenter Server and VMware ESXi in the appropriate License name fields
+11. Click Next.
+ 12. On the Ready to complete page, click Finish. 
+13. In the content pane, click the Assets tab
+14. Right-click sa-vcsa-01.vclass.local and select Assign License. 
+At the bottom of the Assign License screen, you will a message stating Some features will become unavailable. 
+15. Select the vCenter Server license and click OK. 
+16. Point to Home and select Administration > Single Sign-On > Configuration.
+ 17. On the Policies tab, ensure that Password Policy is select and click Edit. 
+18. In the Maximum lifetime text box, enter 0 for password never expires. 
+19. Click OK to save
+20. Point to Home and select Home
+21. In the center pane, click Hosts and Clusters.	  
+22. In the Navigator pane, right-click sa-vcsa-01.vclass.local and select New Datacenter. 
+23. In the Datacenter name text box, accept the default name Datacenter and click OK. 
+In the Navigator pane, you should see that the new data center object is listed under vCenter Server Appliance.
+Task 3: Add Your ESXi Hosts to the vCenter Server Inventory
+ You add ESXi hosts to the vCenter Server inventory. 
+1. In the Navigator pane, right-click Datacenter and select Add Host. The Add Host wizard appears.
+2. On the Name and location page, enter sa-esxi-01.vclass.local and click Next. When repeating the task for your second host, enter sa-esxi-02.vclass.local. 
+3. On the Connection settings page, enter root as the user name and the standard lab password and click Next. 
+4. If you see a security alert stating that the certificate store of vCenter Server cannot verify the certificate, click Yes to proceed. 
+5. On the Host summary page, review the information and click Next. 
+6. On the Assign license page, click the VMware ESXi license key and click Next. 
+7. On the Lockdown mode page, accept the default Disabled and click Next. 
+8. On the VM location page, leave the default and click Next.
+ 9. On the Ready to complete page, review the information and click Finish. 
+10. In the Recent Tasks pane, monitor the progress of the task. 
+11. Repeat steps 1 through 10 to add sa-esxi-02.vclass.local to the inventory. 
+12. In the Navigator pane, select your first ESXi host and click the Summary tab. This tab displays information for the ESXi host, such as CPU, memory, storage, NICs, and virtual machines. 
+13. Click the arrow next to the Hardware pane to view the hardware details of the ESXi host.
+Task 4: Configure the ESXi Hosts as NTP Clients
+You configure the ESXi hosts to use Network Time Protocol (NTP) to maintain accurate time and date.
+ 1. Select sa-esxi-01.vclass.local in the inventory and click the Configure tab. When repeating steps for your second host, select sa-esxi-02.vclass.local. 
+2. Under System in the middle pane, select Time Configuration and view the current settings. 
+3. Click Edit. 
+4. Click Use Network Time Protocol (Enable NTP client). 
+5. From the NTP Service Startup Policy drop-down menu, select Start and stop with host. 
+6. In the NTP Servers text box, ensure that 172.20.10.10 is entered.
+7. Under NTP Service Status, click Start. 
+8. Click OK. 
+9. In the Time Configuration pane, verify that the NTP client appears as Enabled and that the NTP service status appears as Running. 
+10. Repeat steps 1 though 9 to configure your second ESXi host.
+Task 5: Back Up vCenter Server Appliance
+You back up your vCenter Server appliance by connecting to the vCenter Server Appliance with a Web browser using Management port 5480. 
+1. Open a new Internet Explorer tab and enter https://sa-vcsa-01.vclass.Local:5480 in the address bar to access your vCenter Server Management port. 
+2. When the Security Warning appears, click Continue to this website (not recommended). 
+3. Log in with root as the user name and the standard lab password and click Login. 
+4. On the Summary page, click Backup on the upper-right corner of the screen. 
+5. On the Enter backup details page, select FTP from the Protocol drop-down menu. 
+6. In the Location text box, enter 172.20.10.10/VC-Backup. 
+7. In the User name text box, enter ftp-admin
+8. In the Password text box, enter the standard lab password and click Next. 
+9. On the Select parts to backup page, click Next. 
+10. On the Ready to complete page, click Finish. 
+11. When the vCenter Server backup progress bar appears, close the vCenter Server Appliance Management UI browser tab.
+Task 6: Complete the vCenter Server Appliance Deployment
+You return to the vCenter Server Appliance deployment to complete the final steps and clean up for the next lab. 
+1. Return to the vCenter Server Appliance deployment screen and click Continue. 
+2. On the Introduction page of stage 2, click Next. 
+3. On the Appliance configuration page, enter 172.20.10.10 in the NTP servers text box and click Next. 
+4. On the SSO configuration page, enter vsphere.local in the SSO domain name text box. 
+5. In the SSO password and Confirm password text boxes, enter the standard lab password. 
+6. In the Site name text box, enter site-a and click Next. 
+7. On the Configure CEIP page, deselect the Join the VMware Customer Experience Improvement Program check box and click Next. 
+8. On the Ready to complete page, click Finish.
+9. When you are prompted with the warning message You will not be able to pause or stop the install from completing once it’s started. Click OK to continue or Cancel to stop, click OK. The installation might take about 20 minutes to complete. 
+10. When the progress bar shows that the installation is complete, click Close. If your browser is open, it will automatically open a new browser tab. 
+11. When a certificate warning appears, click Continue to this website (Not recommended). 
+12. Close the Getting Started tab. 
+13. Log in to sa-esxi-01.vclass.local with root as user name and the standard lab password. 
+14. In the navigator pane, select Virtual Machines. 
+15. In the right pane, right-click your newly deployed vCenter Server Appliance and select Power > Power off. 
+16. When prompted with the warning messaging about powering off the virtual machine, click Yes to continue. 
+17. When vCenter Server Appliance is powered off, right-click it in the Navigator pane and select Delete. 
+18. When prompted with the Are you sure message, click Delete.
+##################################################################
+Practical No: 05 Navigating the vSphere Clients
+Objective: Become familiar with vSphere Client and vSphere Web Client
+1. Navigate vSphere Client 
+2. Navigate vSphere Web Client
+
+1: Navigate vSphere Client 
+
+In VMware vSphere® Client™, you navigate through the objects in the navigation tree and view the configuration settings to become familiar with the UI layout. 
+1. In your Internet Explorer Web browser, click vSphere Client on the favorite bar and select vSphere Client - sa-vcsa-01.vclass.local.
+2. When the Security Warning appears, click Continue to this website (not recommended). 
+3. On the VMware vCenter Single Sign-on page, enter administrator@vsphere.local as the user name and the standard lab password and click Login. 
+4. In the navigation pane on the left, click the Hosts and Clusters icon. 
+5. In the navigation pane, click the arrow next to each object to expand the view completely. 
+6. In the navigation pane, select sa-esxi-01.vclass.local
+7. In the right pane, click the Summary tab and record the information. 
+• Hypervisor 
+• Logical Processors 
+• NICs
+ 8. In the right pane, expand the Hardware and Configuration panes to review the information. 
+9. In the navigation pane, select the vCenter Server Appliance name to return to the top of the navigation tree. 
+10. In the Search text box on the top, enter datastore. 
+11. When the datastores appear under the search box, click datastore 1. 
+12. In the Summary tab, review the datastore details in the Details pane. 
+13. Close the vSphere Client tab.
+
+2: Navigate vSphere Web Client
+
+You navigate through vSphere Web Client to become familiar with the UI layout. 
+1. In the favorites menu of your Internet Explorer Web browser, select vSphere Web Client > vSphere Web Client - sa-vcsa-01.vclass.local.
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. On the VMware vCenter Single Sign-on page, enter administrator@vsphere.local as the user name and the standard lab password and click Login.  
+4. On the vSphere Web Client Home page, click Hosts and Clusters. 
+5. Click sa-esxi-01.vclass.local in the navigation pane. 
+6. In the center pane, under the Summary tab, expand the Hardware and Configuration panes to review the information. 
+7. In the navigation pane, select sa-vcsa-01.vclass.local to return to the top of the navigation tree. 
+8. In the Search text box, enter datastore. 
+9. When the datastores appear under the search box, select datastore 1. 
+10. In the Summary tab, review the datastore details in the Details pane.
+11. Click the vSphere Web Client Home icon and select Home. The vSphere Web Client displays two panes to the right of the window: Work In Progress and Alarms. You can adjust these panes to provide more space for the content area. 
+12. In the Alarms pane, click the pin icon. The Alarms pane shrinks to a side tab to the right. 
+. The Alarms pane shrinks to a side tab to the right. 
+13. In the Work In Progress pane, click the pin icon to shrink it to a side tab.
+14. To restore the default layout of the user interface, click your logged in user name and select Layout Settings. 
+15. In the Layout Settings window and click Reset to default layout. 
+16. On the vSphere Web Client Home page, click Hosts and Clusters and select sa-vcsa01.vclass.local in the navigation pane. 
+17. In the content pane, review the information shown under the Getting Started tab, which provides general information about the object that you selected in the navigation pane. 
+18. If you are familiar with vCenter Server fundamentals and know how to navigate among the objects, click Help above the content pane and select Hide All Getting Started Pages. The Getting Started tab no longer appears. 
+19. In vSphere Web Client, click the Home icon and select Home from the drop-down menu. 
+20. Leave vSphere Web Client open for the next lab
+##################################################################
+Practical No: 06  Creating Folders in vCenter Server Appliance
+Objective: Create folders in vCenter Server Appliance
+1. Create a Host and Cluster Folder 
+2. Create Virtual Machine and Template Folders
+1: Create a Host and Cluster Folder 
+You create a folder to group hosts and clusters of the same type together. 
+1. If your Internet Explorer browser is not open from the previous lab, click it in your taskbar on the student desktop to open it. 
+2. In your Internet Explorer Web browser, click vSphere Web Client on the favorite bar and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+3. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+4. Log in using administrator@vsphere.local as the user name and the standard lab password. 
+5. On the vSphere Web Client Home page, click Hosts and Clusters. 
+6. In the left pane, click the arrow to expand the vCenter Server inventory. 
+7. Right-click Datacenter and select New Folder > New Host and Cluster Folder. 
+8. In the Enter a name for the folder text box, enter Lab Servers and click OK. 
+9. Drag both ESXi hosts to the Lab Servers folder. 
+10. In the Recent Tasks pane, monitor the Move Entities tasks until they are completed. 
+11. Click the Home icon and select Home.
+
+2: Create Virtual Machine and Template Folders
+
+1. On the vSphere Web Client Home page, click VMs and Templates. 
+2. Right-click the data center and select New Folder > New VM and Template Folder. 
+3. In the Enter a name for the folder text box, enter LabVMs and click OK. 
+4. In the left pane, expand the Datacenter inventory object. 
+5. Drag both virtual machines to the LabVMs folder. 
+6. Expand the LabVMs folder to verify that both virtual machines are in the folder. 
+7. Right-click Datacenter and select New Folder > New VM and Template Folder to create a second virtual machine folder. 
+8. In the Enter a name for the folder text box, enter Templates and click OK. 
+9. Click the Host and Clusters icon. 
+10. Select the Datacenter inventory object. The Lab Servers folder that you created in this lab appears in the left pane. 
+11. Right-click the folder and notice the menu commands in the drop-down menu. 
+12. Click the VMs and Templates icon. 
+13. Select the Datacenter inventory object. The LabVMs folder that you created in this lab appears in the left pane. 
+14. Right-click the folder and notice the menu commands in the drop-down menu.
+15. Leave vSphere Web Client open for the next lab.
+##################################################################
+Practical No: 07 Using Standard Switches
+Objective: Create a standard switch and a port group
+1. View the Standard Switch Configuration 
+2. Create a Standard Switch with a Virtual Machine Port Group 
+3. Attach Your Virtual Machines to the New Virtual Machine Port Group
+
+1: View the Standard Switch Configuration 
+You view the VMware vSphere® standard switch settings to ensure proper configuration of the default switch. 
+1. If vSphere Web Client is not active, open your Internet Explorer Web browser, click vSphere Web Client on the favorite bar, and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. Log in with administrator@vsphere.local as the user name and the standard lab password. 
+4. On the Home page, click Hosts and Clusters. 
+5. In the navigation pane, click the arrows to expand the inventory view. 
+6. Select sa-esxi-01.vclass.local, click the Configure tab, and select Virtual switches in the middle pane.
+7. In the Virtual switches pane, select the displayed virtual switch,
+ Q1. What is the name of the default standard switch? 
+ The default virtual switch is named vSwitch0.
+ Q2. Which physical adapter is the default standard switch connected to? 
+The default switch is connected to the physical adapter vmnic0. 
+Q3. Which network is your virtual machine connected to? 
+vSwitch0 contains a virtual machine port group named VM Network. Your virtual machine is connected to the VM Network port group. 
+Q4. Which networks are connected to the default standard switch?
+
+2: Create a Standard Switch with a Virtual Machine Port Group 
+You create a virtual machine port group on a standard switch, which handles network traffic at the host level in your vSphere environment. 
+1. In the Hosts and Clusters navigator pane, select sa-esxi-01.vclass.local and click the Configure tab. When repeating this task for your second ESXi host, select sa-esxi02.vclass.local. 
+2. Select Networking > Virtual Switches in the center pane and click Add host networking. The Add Networking wizard appears
+3. On the Select connection type page, click Virtual Machine Port Group for a Standard Switch and click Next. 
+4. On the Select target device page, click New standard switch and click Next. 
+5. On the Create a Standard Switch page, click the Add adapters icon (the green plus sign). 
+6. Select vmnic3 for the virtual switch of the Production network and click OK. 
+7. Review the information for the new active adapter and click Next. 
+8. On the Connection settings page, enter Production in the Network label text box and click Next.
+9. On the Ready to complete page, verify that the information is accurate and click Finish. 
+10. In the Virtual switches pane, select vSwitch1. You may need to click and pull downwards the 3 bar display adjustment below the list to display the newly created switch. The Production port group appears. 
+11. Repeat task 2 for your second ESXi host sa-esxi-02.vclass.local.
+3: Attach Your Virtual Machines to the New Virtual Machine Port Group
+You attach the virtual machine to the virtual switch port group so that the virtual machine can communicate with other networked devices. 
+1. In vSphere Web Client, click the Home icon and select VMs and Templates. 
+2. In the left pane, click the arrows to expand the view of your data center and folders. 
+3. In the LabVMs folder, right-click VM1-1 and select Edit Settings. When repeating this task for your first virtual machine on your second host, right-click VM2-1. 
+4. Click the arrow next to Network adapter 1 to expand the view.
+ 5. From the drop-down menu, select Production. 
+6. Verify that the Connected and Connect At Power On check boxes are selected. 
+7. Click OK to close the Edit Settings window. 
+8. Renew the virtual machine’s IP address. 
+a. In the navigation pane, right-click your virtual machine and select Open Console. 
+b. When prompted with the Open Console window, accept the default Web Console and click Continue. 
+c. When the website security certificate page opens, click Continue to this website (not recommended). 
+d. Log in to the virtual machine using the standard lab password.
+ e. Click Start. 
+f. In the Search programs and files text box, enter cmd to open a Command Prompt window and press Enter. 
+g. At the command prompt, run the ipconfig /release command. 
+h. Run the ipconfig /renew command. 
+i. Record the virtual machine’s IP address and the default gateway. 
+9. At the virtual machine’s command prompt, ping the ControlCenter 172.20.10.10 to verify the virtual machine is connected to the network. Your ping should be successful. If it is not successful, ask your instructor for help. 
+10. Repeat Task 3 for your VM2-1 virtual machine. 
+11. Leave vSphere Web Client and the virtual machine console tab open for the next lab.
+##################################################################Practical No: 08 Accessing iSCSI Storage
+a] Managing VMFS Datastores  b] Accessing NFS Storage
+Accessing iSCSI Storage:
+
+Objective: Configure access to an iSCSI datastore
+
+1. Add a VMkernel Port Group to a Standard Switch 
+2. Configure the iSCSI Software Adapter and Connect It to the Storage
+
+1: Add a VMkernel Port Group to a Standard Switch
+You use VMkernel interfaces to provide network connectivity for your hosts and to handle other types of traffic, such as VMware vSphere® vMotion® traffic, storage traffic, and VMware vSphere® Fault Tolerance traffic. 
+1. If vSphere Web Client is not active, open your Internet Explorer Web browser, click vSphere Web Client on the favorite bar, and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. Log in using administrator@vsphere.local as the user name and the standard lab password. 
+4. On the vSphere Web Client Home page, click Hosts and Clusters. 
+5. In the left pane, click the arrows to expand the data center and folders. 
+6. Select sa-esxi-01.vclass.local. When repeating this task for your second host select sa-esxi02.vclass.local. 
+7. Click the Configure tab and select Networking > VMkernel adapters. 
+8. Click the Add host networking icon. The Add Networking wizard starts. 
+9. On the Select connection type page, click VMkernel Network Adapter and click Next.	
+10. On the Select target device page, click Select an existing standard switch. 
+11. Click Browse and select vSwitch0. 
+12. Click OK. 
+13. Click Next. 
+14. On the Port properties page, enter IP Storage in the Network label text box and click Next. 
+15. On the IPv4 settings page, click Use static IPv4 settings. 
+16. In the VMkernel port IPv4 address text box, enter 172.20.10.61 for the first host and 172.20.10.62 for the second host. 
+17. Enter 255.255.255.0 in the Subnet mask text box for both hosts. 
+18. Verify that the VMkernel default gateway is set to 172.20.10.10. 
+19. Click Next. 
+20. On the Ready to complete page, click Finish. 
+21. Repeat steps 6 through 20 for your second ESXi host sa-esxi-02.vclass.local
+
+2: Configure the iSCSI Software Adapter and Connect It to the Storage
+You use the built-in software iSCSI adapter on the ESXi host to directly connect to a remote iSCSI target on the IP network. 
+1. In the inventory, select your first ESXi host sa-esxi-01.vclass.local and click the Configure tab. When repeating the task for your second host select sa-esxi-02.vclass.local. 
+2. Select Storage > Storage Adapters. 
+3. Click the Add new storage adapter icon (the green plus sign). 
+4. Select Software iSCSI adapter. 
+5. When the Add Software iSCSI Adapter message appears, click OK
+6. In the Storage Adapters list, scroll down and select the newly created iSCSI software adapter.
+7. In the Adapter Details pane, click the Properties tab. 
+8. Verify that the adapter status is Enabled. 
+9. Click Edit next to General. 
+10. Ensure that the name shown in the iSCSI Name text box matches iqn.1998- 01.com.vmware:sa-esxi-01-######## for your first ESXi host and iqn.1998- 02.com.vmware:sa-esxi-02-######## for the second ESXi host. The numbers at the end of the iSCSI name have #s to represent characters that might change. 
+11. Click OK. 
+12. In the Adapter Details pane, click the Network Port Binding tab. 
+13. Click the Add icon (the green plus sign). 
+14. Select the IP Storage check box and click OK. 
+15. In the Adapter Details pane, click the Targets tab. 
+16. Click Dynamic Discovery and click Add. 
+17. On the Add Send Target Server page, enter 172.20.10.10 for the iSCSI server name in the iSCSI Server text box and click OK. 
+18. Monitor the Recent Tasks pane and wait for the task to complete. 
+19. Click the Rescan all storage adapters icon.
+20. When the rescan storage message appears, click OK and wait for the task to complete. 
+21. Repeat steps 1 through 20 for your second ESXi host sa-esxi-02.vclass.local.
+22. In the Adapter Details pane, click the Devices tab. 
+23. Verify that one or more LUNs appear and record the values.
+• LUN number 
+• Capacity 
+• Operational state 
+• Hardware Acceleration 
+The LUNs are hosted by an iSCSI provider and are used to create datastores in later labs. 
+24. Compare the results for both hosts. 
+25. Leave vSphere Web Client open for the next lab.
+
+Managing VMFS Datastores
+
+Objective: Create and manage VMFS datastores
+1. Rename a VMFS Datastore
+2. Create VMFS Datastores for the ESXi Host 
+3. Expand a VMFS Datastore to Consume Unused Space on a LUN 
+4. Remove a VMFS Datastore 
+5. Extend a VMFS Datastore 
+6. Create a second Shared VMFS Datastore Using iSCSI
+
+1: Rename a VMFS Datastore
+1. If vSphere Web Client is not active, open your Internet Explorer Web browser, click vSphere Web Client on the favorite bar, and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. Log in using administrator@vsphere.local for the user name and the standard lab password. 
+4. In the left pane of the vSphere Web Client Home page, click Storage. 
+5. In the left pane, expand the vCenter Server instance and the Datacenter inventory object. 
+6. In the left pane, right-click your local datastore for your first ESXi host named datastore 1 and select Rename
+7. Enter Local01-1 and click OK
+8. In the left pane, right-click your local datastore for your second ESXi host named datastore 1(1) and select Rename. 
+9. Enter Local02-1 and click OK. 
+10. In the Navigator pane, verify that the new datastore names appear in the storage inventory.
+
+2: Create VMFS Datastores for the ESXi Host
+You set up VMFS datastores on iSCSI-based storage devices to be used as repositories by virtual machines. 
+1. On the vSphere Web Client Home page, click Hosts and Clusters. 
+2. In the left pane, click the arrows to expand the data center and folders. 
+3. Right-click Datacenter and select Storage > New Datastore to start the New Datastore wizard. 
+4. On the Location page, click Next. 
+5. On the Type page, ensure that VMFS is selected and click Next. 
+6. On the Name and device selection page, enter VMFS-2 in the Datastore name text box. 
+7. In the Select a host to view its accessible disks/LUNs drop-down menu, select your first host name sa-esxi-01.vclass.local. A LUN list appears. 
+8. In the LUN list, select LUN 2 and click Next. 
+9. On the VMFS version page, select VMFS 6 and click Next. 
+10. On the Partition configuration page, move the Datastore Size slider to reduce the LUN size by 3 GB, or enter the desired number on the line next to the slider and click Next. For example, if the current disk size is 10 GB, change the size to 7 GB. This setting is in preparation for task 3 in which you expand the VMFS datastore to its full size. 
+11. On the Ready to complete page, review the information and click Finish. 
+12. Right-click Datacenter in the inventory and select Storage > New Datastore. 
+13. On the Location page, click Next. 
+14. On the Type page, ensure that VMFS is selected and click Next.
+15. On the Name and device selection page, enter VMFS-3 in the Datastore name text box.
+16. In the Select a host to view its accessible disks/LUNs drop-down menu, select your second host name. A LUN list appears. 
+17. In the LUN list, select LUN 3 and click Next. 
+18. On the VMFS version page, select VMFS 6 and click Next. 
+19. On the Partition configuration page, accept the default (full capacity) and click Next. 
+20. On the Ready to complete page, review the information and click Finish. 
+21. Monitor the progress in the Recent Tasks pane until the task is completed. 
+22. In the Navigator pane, click the Storage icon
+23. Verify that your two VMFS-2 and VMFS-3 datastores are listed in the datastore inventory. 
+24. In the datastore inventory, click VMFS-2 datastore. 
+25. Click the Summary tab and record the value for storage capacity. 
+3: Expand a VMFS Datastore to Consume Unused Space on a LUN
+You dynamically increase the capacity of a VMFS datastore when more space is required by virtual machines. 
+1. In the left pane, click the Storage icon and click the arrows to expand the Datacenter inventory object. 
+2. Right-click VMFS-2 datastore and select Increase Datastore Capacity. The Increase Datastore Capacity wizard starts. 
+3. On the Select Device page, select LUN 2. 
+Yes should appear in the Expandable column of LUN 2.
+You should see an entry similar to the screenshot
+4. Click Next. 
+5. On the Specify Configuration page, select Use “Free Space 3.00 GB” to expand the datastore from the Partition configuration drop-down menu and click Next. The free space listed in the drop-down menu might be different in your lab environment. 
+6. On the Ready to Complete page, review the information and click Finish. 
+7. When the task is completed, select the VMFS-2 datastore in the left pane. 
+8. Click the Summary tab. 
+9. Verify that the datastore size is increased to the maximum capacity, minus the space required for system overhead. 
+The new capacity should be 9.75 GB. 
+
+4: Remove a VMFS Datastore 
+You can delete any type of VMFS datastore, including the copies that you mounted without resignaturing. When you delete a datastore, it is destroyed and removed from all hosts. 
+1. In the Navigator pane, ensure that the Datastore tab is clicked and expand the vCenter Server instance and the Datacenter inventory object. 
+2. Right-click the VMFS-3 datastore and select Delete Datastore. 
+3. When the Confirm Delete Datastore message appears, click Yes and wait for the task to be completed. 
+4. Click the Refresh icon in the vSphere Web Client and verify that the datastore is removed from the inventory.
+
+5: Extend a VMFS Datastore 
+You extend the capacity of a VMFS datastore when extra storage space is needed. This task uses a second LUN to extend the size of a datastore based on the first LUN. 
+1. In vSphere Web Client, click the Home icon and select Storage. 
+2. In the left Navigator pane, select the first VMFS-2 datastore. 
+3. Click the Configure tab. 
+4. Ensure that General is selected and click Increase. The Increase Datastore Capacity wizard starts. 
+5. On the Select Device page, select LUN 3 and click Next. 
+6. On the Specify Configuration page, select Use all available partitions from the Partition Configuration drop-down menu and click Next.
+7. On the Ready to Complete page, review the information and click Finish. 
+8. When the task completes, refresh the page and select Device Backing in the middle pane and verify that two extents appear in the Extent Name pane. The Extent Name pane should show both of your assigned LUN IDs. You might need to adjust the size of the Extent Name pane to view all the extent names.
+9. Click the Summary tab. 
+10. Record the new value for Total Capacity in the Summary tab.
+    The value should differ from the value recorded in task 3, step 9. 
+11. In the navigator pane, click the Storage tab, click the Hosts tab in middle pane, and notice that two hosts are connected, indicating that this new datastore is shared between your two ESXi hosts. 
+12. Right-click your VMFS-2 datastore in the inventory and select Rename. 
+13. In the Enter the new name text box, enter Shared-VMFS. 
+14. Click OK. 
+
+6: Create a second Shared VMFS Datastore Using iSCSI 
+You use an iSCSI shared LUN to create a VMFS 6 file system. 
+1. On the vSphere Web Client Home page, click the Home icon and select Hosts and Clusters. 
+2. In the left pane, click the arrows to expand the data center and folders. 
+3. Right-click Datacenter and select Storage > New Datastore. The New Datastore wizard starts. 
+4. On the Location page, click Next. 
+5. On the Type page, ensure that VMFS is selected and click Next.
+6. On the Name and device selection page, enter Shared-iSCSI-Datastore in the Datastore name text box. 
+7. In the “Select a host to view its accessible disks/LUNs” drop-down menu, select your first ESXi host name. A LUN list appears. 
+8. In the newly displayed LUN list, select MSFT iSCSI Disk (Capacity 63 GB) and click Next. 
+9. On the VMFS version page, select VMFS 6 and click Next. 
+10. On the Partition configuration page, select Use all available partition from the Partition Configuration drop-down menu and click Next. 
+11. On the Ready to complete page, review the information and click Finish. 
+12. Leave vSphere Web Client open for the next lab.
+
+Accessing NFS Storage
+
+Objective: Configure access to an NFS datastore
+1. Configure Access to NFS Datastores 
+2. View NFS Storage Information
+Next1: Configure Access to NFS Datastores 
+You mount an NFS share to your ESXi hosts and use it as a datastore. 
+1. If vSphere Web Client is not active, open your Internet Explorer Web browser, click vSphere Web Client on the favorite bar, and select vSphere Web Client - sa-vcsa-01.vclass.local. 
+2. When the There is a problem with this website’s security certificate warning message appears, click Continue to this website (not recommended). 
+3. Log in using administrator@vsphere.local as the user name and standard lab password. 
+4. On the vSphere Web Client Home page, click the Storage icon in the Navigator pane. 
+5. Right-click the datacenter and select Storage > New Datastore. The New Datastore wizard starts. 
+6. On the Location page, click Next.
+7. On the Type page, select NFS and click Next. 
+8. On the Select NFS version page, select NFS 3 and click Next. 
+9. On the Name and configuration page, enter NFS-Data in the Datastore name text box. 
+10. In the Folder text box, enter /NFS-Data as the folder name. 
+11. In the Server text box, enter 172.20.10.10 as the NFS server name and click.
+12. On the Host accessibility page, select both ESXi hosts and click Next. 
+13. On the Ready to complete page, review the information and click Finish. 
+14. Verify that your NFS datastore is listed in the inventory.
+2: View NFS Storage Information 
+You view the information about your NFS storage and the contents in the NFS datastore. 
+1. In the left pane, select your NFS-Data datastore. 
+2. In the center pane, click the Summary tab. 
+3. In the content pane, record the following information.
+• The datastore type 
+• The capacity of the datastore 
+• The free space of the datastore 
+• The used space of the datastore 
+4. Leave vSphere Web Client open for the next lab.
